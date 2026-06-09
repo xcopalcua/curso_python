@@ -18,6 +18,7 @@ def validar_email(email):
         bool: True si es válido, False si no
     """
     # TU CÓDIGO AQUÍ
+    print(f"Validando email: {email}")
     pass
 
 #### **Ejercicio 1.2: Filtrador de Dispositivos**
@@ -68,3 +69,23 @@ def agrupar_por_region(records):
     """
     # TU CÓDIGO AQUÍ
     pass
+
+
+
+##ejecutar ejercicio 1#
+emails = [
+    "juan@example.com",
+    "maria.lopez@gmail.com",
+    "juanexample.com",
+    "",
+    "usuario123@empresa.com",
+    "juan@@example.com",
+    "test@dominio.mx",
+    "juan@",
+    "correo@universidad.edu",
+    "juan@example",
+    "user_01@test.net",
+    "juan @example.com"
+]
+
+validar_emails = [validar_email(email) for email in emails]
