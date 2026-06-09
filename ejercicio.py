@@ -18,7 +18,40 @@ def validar_email(email):
         bool: True si es válido, False si no
     """
     # TU CÓDIGO AQUÍ
+    if not email:
+        return False
+
+    split_email = email.split("@")
+    if len(split_email) != 2:
+        return False
+
+    if "." not in email:
+        return False
+
+    if " " in email:
+        return False
+
+    return True
+
     pass
+
+emails = [
+    "juan@example.com",
+    "maria.lopez@gmail.com",
+    "juanexample.com",
+    "",
+    "usuario123@empresa.com",
+    "juan@@example.com",
+    "test@dominio.mx",
+    "juan@",
+    "correo@universidad.edu",
+    "juan@example",
+    "user_01@test.net",
+    "juan @example.com"
+]
+
+for email in emails:
+    print(f"{email}: {validar_email(email)}")
 
 #### **Ejercicio 1.2: Filtrador de Dispositivos**
 def filtrar_pendientes(devices_list):
@@ -32,6 +65,14 @@ def filtrar_pendientes(devices_list):
         list: Lista filtrada de dispositivos pendientes
     """
     # TU CÓDIGO AQUÍ
+    devices_pendientes = []
+
+    for device in devices_list:
+        if not device["returned"] and not device["is_lost"]:
+            devices_pendientes.append(device)
+
+    return devices_pendientes
+
     pass
 
 # Prueba
@@ -41,6 +82,7 @@ devices = [
     {"id": "DEV003", "returned": False, "is_lost": True},
 ]
 resultado = filtrar_pendientes(devices)
+print(resultado)
 # Debe retornar solo DEV001
 
 
@@ -67,4 +109,17 @@ def agrupar_por_region(records):
         dict: {"North": 3, "South": 2}
     """
     # TU CÓDIGO AQUÍ
+    region_count = {}
+
+    for record in records:
+        region = record["region"]
+        if region in region_count:
+            region_count[region] += 1
+        else:
+            region_count[region] = 1
+
+    return region_count
+
     pass
+
+print(agrupar_por_region(records))
