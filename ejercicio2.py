@@ -21,6 +21,7 @@ devices = [
     {"id": "DEV002", "region": "South"},
     {"id": "DEV003", "region": "North"},
     {"id": "DEV004", "region": "North"},
+    {"id": "DEV005", "region": "East"}
 ]
 resultado = agrupar_por_region(devices)
 # {"North": 3, "South": 1}

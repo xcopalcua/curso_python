@@ -21,17 +21,26 @@
 # Agrupar dispositivos por ubicación
 warehouses_dict = {}
 for device in devices_with_location:
-    location = device["location"]
+    location = device["location"]   #CDMX, Tlaxcala, Oaxaca
     if location not in warehouses_dict:
-        warehouses_dict[location] = []
+        warehouses_dict[location] = [] 
+        #warehouses_dict = {"CDMX": []}
+    
     warehouses_dict[location].append(device)
 
 
 # Esto convierte:
-[{"location": "CDMX", "id": "001"}, {"location": "CDMX", "id": "002"}]
+devices_with_location=[{"location": "CDMX", "id": "001"}, 
+ {"location": "CDMX", "id": "002"},
+ {"location": "Tlaxcala", "id": "003"},
+ {"location": "Oaxaca", "id": "004"},
+ {"location":"Tlaxcala", "id": "005"}]
 
 #En:
-{"CDMX": [{"id": "001"}, {"id": "002"}]}
+warehouses_dict={"CDMX": [{"location": "CDMX", "id": "001"}, {"location": "CDMX", "id": "002"}],
+                 "Tlaxcala":[{"location": "Tlaxcala", "id": "003"},{"location":"Tlaxcala", "id": "005"}],
+                 "Oaxaca":[{"location": "Oaxaca", "id": "004"}]
+ }
 
 ### **2.1 Trabajo con Diccionarios**
 # ============================================================
@@ -45,9 +54,9 @@ Se usa para agrupar registros por categoría, ubicación, estado, etc.
 # Datos de entrada: Dispositivos con ubicación asignada
 devices_with_location = [
     {"id": "DEV001", "warehouse": "CDMX", "route": "RT001", "date": "2026-06-01"},
-    {"id": "DEV002", "warehouse": "GDL", "route": "RT002", "date": "2026-06-02"},
+    {"id": "DEV005", "warehouse": "GDL", "route": "RT002", "date": "2026-06-02"},
     {"id": "DEV003", "warehouse": "CDMX", "route": "RT003", "date": "2026-06-03"},
-    {"id": "DEV004", "warehouse": "MTY", "route": "RT004", "date": "2026-06-04"},
+    {"id": "DEV005", "warehouse": "MTY", "route": "RT004", "date": "2026-06-04"},
     {"id": "DEV005", "warehouse": "CDMX", "route": "RT005", "date": "2026-06-05"},
 ]
 
@@ -148,8 +157,8 @@ notification_config = {
 
 # Acceso a datos anidados
 pais = "Mexico"
-endpoint = notification_config[pais]["transportista"]
-label = notification_config[pais]["warehouse_label"]
+endpoint = notification_config[pais]["transportista"] #"main.return_gps",
+label = notification_config[pais]["warehouse_label"] #"Almacén"
 
 print(f"País: {pais}")
 print(f"Endpoint: {endpoint}")
@@ -165,12 +174,14 @@ greeting = config_col.get("greeting", "Best regards")
 """
 Común al procesar resultados de base de datos
 """
-
+# id, gps, ubicacion....
+# where warehouse_country="Mexico"
+# limit 100
 # Resultado de query SQL (lista de tuplas)
 db_results = [
-    (1, "DEV001", "CDMX"),
-    (2, "DEV002", "GDL"),
-    (3, "DEV003", "CDMX")
+    (1, "DEV001", "CDMX"),#0
+    (2, "DEV002", "GDL"),#1
+    (3, "DEV003", "CDMX"),#2
 ]
 
 # Transformar a lista de diccionarios (más fácil de usar)
@@ -181,7 +192,8 @@ for row in db_results:
         "device_id": row[1],
         "warehouse": row[2]
     })
-
+devices_list = [{"id":1,"device_id":"DEV001","warehouse":"CDMX"},
+                {"id":2,"device_id":"DEV002","warehouse":"GDL"},]
 # O con list comprehension:
 devices_list = [
     {"id": row[0], "device_id": row[1], "warehouse": row[2]}
@@ -307,6 +319,7 @@ result_dict = result._asdict()
 # Índice de registros por (country, carrier)
 records_index = {
     ("Mexico", "DHL"): [("RT001", "DEV001"), ("RT002", "DEV002")],
+    ("Mexico", "FedEx"): [("RT002", "DEV005")],
     ("Colombia", "FedEx"): [("RT003", "DEV003")]
 }
 
