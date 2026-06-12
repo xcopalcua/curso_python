@@ -13,7 +13,13 @@ def agrupar_por_region(devices_list):
         dict: {"North": 3, "South": 2}
     """
     # TU CÓDIGO AQUÍ
-    pass
+    resultado = {}
+    for device in devices_list:
+        region = device["region"]
+        resultado[region] = resultado.get(region, 0) + 1
+    return resultado
+    
+  
 
 # Prueba
 devices = [
@@ -23,7 +29,10 @@ devices = [
     {"id": "DEV004", "region": "North"},
     {"id": "DEV005", "region": "East"}
 ]
+
 resultado = agrupar_por_region(devices)
+print(resultado)
+
 # {"North": 3, "South": 1}
 
 
@@ -40,4 +49,12 @@ def eliminar_duplicados_ordenado(items):
     """
     # PISTA: No uses set() directamente (no mantiene orden en Python < 3.7)
     # Usa dict.fromkeys() o loop manual
-    pass
+    
+
+    return list(dict.fromkeys(items))
+
+
+items = [1, 2, 3, 2, 4, 1, 5, 3]
+resultado = eliminar_duplicados_ordenado(items)
+
+print(resultado)
