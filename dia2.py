@@ -103,7 +103,7 @@ status = payload.get("status", "pending")  # "pending" (no existe)
 # 2. keys(), values(), items()
 claves = list(payload.keys())     # ["organization", "date", "country"]
 valores = list(payload.values())  # ["ORG123", "2026-06-08", "Mexico"]
-pares = list(payload.items())     # [("organization", "ORG123"), ...]
+pares = list(payload.items())     # [("organization", "ORG123"), ("date", "2026-06-08"), ("country", "Mexico")]
 
 # 3. in - Verificar existencia de clave
 if "organization" in payload:
